@@ -1,0 +1,12 @@
+[
+  {
+    "modid": "betterchat",
+    "name": "Better Chat",
+    "description": "Makes chat smoother and gives it a clear background.",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
+    "url": "",
+    "updateUrl": "",
+    "authorList": ["LlamaLad7"]
+  }
+]
