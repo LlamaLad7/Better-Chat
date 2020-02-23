@@ -12,8 +12,6 @@ Options:
 
 * Change its Scale
 
-Multithreading implementation by Team Hyperium: https://github.com/HyperiumClient/Hyperium/blob/master/src/main/java/cc/hyperium/mods/sk1ercommon/Multithreading.java
-
-Downloads are on my [CurseForge](https://www.curseforge.com/minecraft/mc-mods/better-chat) tab.
+Downloads are on my [CurseForge](https://www.curseforge.com/minecraft/mc-mods/better-chat).
 
 Friend me on Discord (LlamaLad7#7444) for support / feature suggestions.
