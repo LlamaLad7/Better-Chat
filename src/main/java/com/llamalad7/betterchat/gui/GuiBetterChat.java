@@ -103,7 +103,8 @@ public class GuiBetterChat extends GuiNewChat {
                 float f1 = this.getChatScale();
                 int l = MathHelper.ceiling_float_int((float) this.getChatWidth() / f1);
                 GlStateManager.pushMatrix();
-                GlStateManager.translate(2.0F + BetterChat.getSettings().xOffset, 20.0F + BetterChat.getSettings().yOffset, 0.0F);
+                if (BetterChat.getSettings().smooth) GlStateManager.translate(2.0F + BetterChat.getSettings().xOffset, 20.0F + BetterChat.getSettings().yOffset + (9 - 9*percent)*f1, 0.0F);
+                else GlStateManager.translate(2.0F + BetterChat.getSettings().xOffset, 20.0F + BetterChat.getSettings().yOffset, 0.0F);
                 GlStateManager.scale(f1, f1, 1.0F);
 
                 for (int i1 = 0; i1 + this.scrollPos < this.drawnChatLines.size() && i1 < i; ++i1) {
@@ -144,21 +145,13 @@ public class GuiBetterChat extends GuiNewChat {
 //                                //this.mc.fontRendererObj.drawStringWithShadow(s, 0, ticksLeft > lowerThreshold ? 20 - (int) (updatePercentage() * (20-(j2 - 8))) : 20, 16777215 + (l1 << 24));
 //                                GlStateManager.disableAlpha();
 //                                //GlStateManager.disableBlend();
-                                if (!BetterChat.getSettings().clear) {
-                                    if (BetterChat.getSettings().smooth) {
-                                        drawRect(i2, (int) ((j2 - 9) + 9 - percent * 9), i2 + l + 4, (int) ((j2) + 9 - percent * 9), (l1 / 2) << 24);
-                                    } else {
-                                        drawRect(i2, j2 - 9, i2 + l + 4, j2, l1 / 2 << 24);
-                                    }
+                                if (!BetterChat.getSettings().clear){
+                                    drawRect(i2, j2 - 9, i2 + l + 4, j2, l1 / 2 << 24);
                                 }
                                 String s = chatline.getChatComponent().getFormattedText();
                                 GlStateManager.enableBlend();
-                                if (BetterChat.getSettings().smooth) {
-                                    if (i1 <= newLines) {
-                                        this.mc.fontRendererObj.drawStringWithShadow(s, i2, (j2 - 8) + 9 - percent * 9, 16777215 + ((int) (255 * percent) << 24));
-                                    } else {
-                                        this.mc.fontRendererObj.drawStringWithShadow(s, i2, (j2 - 8) + 9 - percent * 9, 16777215 + (l1 << 24));
-                                    }
+                                if (BetterChat.getSettings().smooth && i1 <= newLines) {
+                                    this.mc.fontRendererObj.drawStringWithShadow(s, i2, (j2 - 8), 16777215 + ((int) (l1 * percent) << 24));
                                 } else {
                                     this.mc.fontRendererObj.drawStringWithShadow(s, (float) i2, (float) (j2 - 8), 16777215 + (l1 << 24));
                                 }

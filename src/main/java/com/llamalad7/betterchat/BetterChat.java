@@ -29,7 +29,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 @Mod(modid = BetterChat.MODID, version = BetterChat.VERSION, name = "Better Chat")
 public class BetterChat {
     public static final String MODID = "betterchat";
-    public static final String VERSION = "1.0";
+    public static final String VERSION = "1.2";
     private static ChatSettings settings;
     @EventHandler
     public void preinit(FMLPreInitializationEvent event) {
