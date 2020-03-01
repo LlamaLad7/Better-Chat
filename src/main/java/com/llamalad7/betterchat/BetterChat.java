@@ -18,7 +18,6 @@ package com.llamalad7.betterchat;
 
 import com.llamalad7.betterchat.command.CommandConfig;
 import com.llamalad7.betterchat.handlers.InjectHandler;
-import net.minecraft.init.Blocks;
 import net.minecraftforge.client.ClientCommandHandler;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
@@ -28,7 +27,6 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.logging.log4j.Logger;
 
 @Mod(modid = BetterChat.MODID, name = BetterChat.NAME, version = BetterChat.VERSION)
 @SideOnly(Side.CLIENT)
@@ -36,7 +34,7 @@ public class BetterChat
 {
     public static final String MODID = "betterchat";
     public static final String NAME = "Better Chat";
-    public static final String VERSION = "1.2";
+    public static final String VERSION = "1.3";
     private static ChatSettings settings;
 
     @EventHandler
