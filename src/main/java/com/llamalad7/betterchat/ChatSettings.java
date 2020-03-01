@@ -16,6 +16,7 @@
  */
 package com.llamalad7.betterchat;
 
+import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 
@@ -55,7 +56,8 @@ public class ChatSettings {
 
         prop = config.get("All", "yOffset", 0);
         prop.set(yOffset = 0);
-
+        Minecraft.getMinecraft().gameSettings.chatScale = 1.0f;
+        Minecraft.getMinecraft().gameSettings.chatWidth = 1.0f;
         config.save();
     }
 
