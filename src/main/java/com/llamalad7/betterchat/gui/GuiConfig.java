@@ -27,6 +27,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.client.config.GuiSlider;
 
 import java.awt.*;
@@ -44,6 +45,7 @@ public class GuiConfig extends GuiScreen {
     private int chatLeft, chatRight, chatTop, chatBottom, dragStartX, dragStartY;
     private GuiButton clearButton, smoothButton;
     private GuiSlider scaleSlider, widthSlider;
+
 
 
     public GuiConfig() {

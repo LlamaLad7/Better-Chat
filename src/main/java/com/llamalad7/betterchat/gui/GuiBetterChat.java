@@ -17,11 +17,6 @@
 package com.llamalad7.betterchat.gui;
 
 import com.google.common.collect.Lists;
-
-import java.util.Iterator;
-import java.util.List;
-import javax.annotation.Nullable;
-
 import com.llamalad7.betterchat.BetterChat;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.*;
@@ -34,6 +29,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import javax.annotation.Nullable;
+import java.util.Iterator;
+import java.util.List;
 
 import static com.llamalad7.betterchat.utils.AnimationTools.clamp;
 
@@ -98,7 +97,7 @@ public class GuiBetterChat extends GuiNewChat {
                 float f1 = this.getChatScale();
                 int k = MathHelper.ceil((float) this.getChatWidth() / f1);
                 GlStateManager.pushMatrix();
-                if (BetterChat.getSettings().smooth) GlStateManager.translate(2.0F + BetterChat.getSettings().xOffset, 8.0F + BetterChat.getSettings().yOffset + (9 - 9*percent)*f1, 0.0F);
+                if (BetterChat.getSettings().smooth && !this.isScrolled) GlStateManager.translate(2.0F + BetterChat.getSettings().xOffset, 8.0F + BetterChat.getSettings().yOffset + (9 - 9*percent)*f1, 0.0F);
                 else GlStateManager.translate(2.0F + BetterChat.getSettings().xOffset, 8.0F + BetterChat.getSettings().yOffset, 0.0F);
                 GlStateManager.scale(f1, f1, 1.0F);
                 int l = 0;
