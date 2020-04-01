@@ -21,6 +21,7 @@ import com.llamalad7.betterchat.ChatSettings;
 import com.llamalad7.betterchat.handlers.InjectHandler;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;

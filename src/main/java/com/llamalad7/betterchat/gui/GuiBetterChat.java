@@ -103,7 +103,7 @@ public class GuiBetterChat extends GuiNewChat {
                 float f1 = this.getChatScale();
                 int l = MathHelper.ceiling_float_int((float) this.getChatWidth() / f1);
                 GlStateManager.pushMatrix();
-                if (BetterChat.getSettings().smooth) GlStateManager.translate(2.0F + BetterChat.getSettings().xOffset, 20.0F + BetterChat.getSettings().yOffset + (9 - 9*percent)*f1, 0.0F);
+                if (BetterChat.getSettings().smooth && !this.isScrolled) GlStateManager.translate(2.0F + BetterChat.getSettings().xOffset, 20.0F + BetterChat.getSettings().yOffset + (9 - 9*percent)*f1, 0.0F);
                 else GlStateManager.translate(2.0F + BetterChat.getSettings().xOffset, 20.0F + BetterChat.getSettings().yOffset, 0.0F);
                 GlStateManager.scale(f1, f1, 1.0F);
 
