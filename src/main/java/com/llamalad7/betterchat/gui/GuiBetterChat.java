@@ -202,7 +202,7 @@ public class GuiBetterChat extends GuiNewChat {
     public void printChatMessageWithOptionalDeletion(IChatComponent chatComponent, int chatLineId) {
         percentComplete = 0.0F;
         this.setChatLine(chatComponent, chatLineId, this.mc.ingameGUI.getUpdateCounter(), false);
-        //logger.info("[CHAT] " + chatComponent.getUnformattedText());
+        logger.info("[CHAT] " + chatComponent.getUnformattedText());
     }
 
     private void setChatLine(IChatComponent chatComponent, int chatLineId, int updateCounter, boolean displayOnly) {
