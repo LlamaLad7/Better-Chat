@@ -1,6 +1,6 @@
 # Better Chat
 
-Forge mod by [LlamaLad7](https://github.com/lego3708) which lets you customize the chat.
+Forge mod by [LlamaLad7](https://github.com/LlamaLad7) which lets you customize the chat.
 
 Options:
 
