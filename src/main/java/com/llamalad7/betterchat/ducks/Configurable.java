@@ -13,10 +13,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.llamalad7.betterchat.utils;
 
-public class AnimationTools {
-    public static float clamp(float number, float min, float max) {
-        return number < min ? min : Math.min(number, max);
-    }
+package com.llamalad7.betterchat.ducks;
+
+public interface Configurable {
+    void setConfiguring(boolean configuring);
 }

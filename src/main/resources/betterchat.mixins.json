@@ -1,0 +1,9 @@
+{
+  "package": "com.llamalad7.betterchat.mixins",
+  "refmap": "mixins.betterchat.refmap.json",
+  "compatibilityLevel": "JAVA_8",
+  "client": [
+    "MixinGuiNewChat",
+    "AccessorGuiIngameForge"
+  ]
+}

@@ -1,40 +1,40 @@
 /*
- *       Copyright (C) 2020-present LlamaLad7 <https://github.com/lego3708>
+ * Copyright (C) 2020-present LlamaLad7 <https://github.com/LlamaLad7>
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published
+ * by the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
- *       This program is free software: you can redistribute it and/or modify
- *       it under the terms of the GNU General Public License as published
- *       by the Free Software Foundation, either version 3 of the License, or
- *       (at your option) any later version.
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
  *
- *       This program is distributed in the hope that it will be useful,
- *       but WITHOUT ANY WARRANTY; without even the implied warranty of
- *       MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *       GNU Lesser General Public License for more details.
- *
- *       You should have received a copy of the GNU General Public License
- *       along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 package com.llamalad7.betterchat.gui;
 
 import com.llamalad7.betterchat.BetterChat;
 import com.llamalad7.betterchat.ChatSettings;
-import com.llamalad7.betterchat.handlers.InjectHandler;
+import com.llamalad7.betterchat.ducks.Configurable;
+import com.llamalad7.betterchat.mixins.AccessorGuiIngameForge;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
 import net.minecraft.util.MathHelper;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.config.GuiSlider;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import static net.minecraft.client.gui.GuiNewChat.calculateChatboxWidth;
 
 public class GuiConfig extends GuiScreen {
     private ChatSettings settings;
@@ -53,11 +53,14 @@ public class GuiConfig extends GuiScreen {
 
     @Override
     public void initGui() {
-        InjectHandler.chatGUI.configuring = true;
+        GuiNewChat chat = Minecraft.getMinecraft().ingameGUI.getChatGUI();
+        if (chat instanceof Configurable) {
+            ((Configurable) chat).setConfiguring(true);
+        }
         buttonList.add(clearButton = new GuiButton(0, width / 2 - 120, height / 2 - 50, 240, 20, getPropName("clear") + " " + getColoredBool("clear", settings.clear)));
         buttonList.add(smoothButton = new GuiButton(1, width / 2 - 120, height / 2 - 25, 240, 20, getPropName("smooth") + " " + getColoredBool("smooth", settings.smooth)));
         buttonList.add(scaleSlider = new GuiSlider(3, width / 2 - 120, height / 2, 240, 20, getPropName("scale") + " ", "%", 0, 100, this.mc.gameSettings.chatScale*100, false, true));
-        buttonList.add(widthSlider = new GuiSlider(4, width / 2 - 120, height / 2 + 25, 240, 20, getPropName("width") + " ", "px", 40, 320, calculateChatboxWidth(this.mc.gameSettings.chatWidth), false, true));
+        buttonList.add(widthSlider = new GuiSlider(4, width / 2 - 120, height / 2 + 25, 240, 20, getPropName("width") + " ", "px", 40, 320, GuiNewChat.calculateChatboxWidth(this.mc.gameSettings.chatWidth), false, true));
         buttonList.add(new GuiButton(2, width / 2 - 120, height / 2 + 50, 240, 20, getPropName("reset")));
     }
 
@@ -76,11 +79,24 @@ public class GuiConfig extends GuiScreen {
         }
         this.mc.gameSettings.chatScale = (float) scaleSlider.getValueInt()/100;
         this.mc.gameSettings.chatWidth = ((float) widthSlider.getValueInt()-40)/280;
+
+        AccessorGuiIngameForge guiIngameForge = (AccessorGuiIngameForge) Minecraft.getMinecraft().ingameGUI;
+
+        RenderGameOverlayEvent.Chat event = new RenderGameOverlayEvent.Chat(guiIngameForge.getEventParent(), 0, 0);
+        if (MinecraftForge.EVENT_BUS.post(event)) return;
+
+        GlStateManager.pushMatrix();
+        GlStateManager.translate((float)event.posX, (float)event.posY, 0.0F);
         drawExampleChat();
+        GlStateManager.popMatrix();
+
+        guiIngameForge.invokePost(RenderGameOverlayEvent.ElementType.CHAT);
     }
+
     public void drawExampleChat() {
+        GuiNewChat chat = Minecraft.getMinecraft().ingameGUI.getChatGUI();
         List<IChatComponent> lines = new ArrayList<>();
-        int i = MathHelper.floor_float((float) InjectHandler.chatGUI.getChatWidth() / InjectHandler.chatGUI.getChatScale());
+        int i = MathHelper.floor_float((float) chat.getChatWidth() / chat.getChatScale());
         for (IChatComponent line : exampleChat) {
             lines.addAll(GuiUtilRenderComponents.splitText(line, i, this.mc.fontRendererObj, false, false));
         }
@@ -90,7 +106,7 @@ public class GuiConfig extends GuiScreen {
         GlStateManager.translate(2.0F + settings.xOffset, 20.0F + settings.yOffset + scaledresolution.getScaledHeight() - 48, 0.0F);
         float f = this.mc.gameSettings.chatOpacity * 0.9F + 0.1F;
         float f1 = this.mc.gameSettings.chatScale;
-        int k = MathHelper.ceiling_float_int(InjectHandler.chatGUI.getChatWidth() / f1);
+        int k = MathHelper.ceiling_float_int(chat.getChatWidth() / f1);
         GlStateManager.scale(f1, f1, 1.0F);
         int i1 = 0;
         double d0 = 1.0D;
@@ -133,7 +149,10 @@ public class GuiConfig extends GuiScreen {
     @Override
     public void onGuiClosed() {
         settings.saveConfig();
-        InjectHandler.chatGUI.configuring = false;
+        GuiNewChat chat = Minecraft.getMinecraft().ingameGUI.getChatGUI();
+        if (chat instanceof Configurable) {
+            ((Configurable) chat).setConfiguring(false);
+        }
         this.mc.gameSettings.saveOptions();
     }
 
@@ -156,7 +175,7 @@ public class GuiConfig extends GuiScreen {
 //                this.mc.gameSettings.chatWidth = 1.0f;
                 scaleSlider.setValue(this.mc.gameSettings.chatScale*100);
                 scaleSlider.updateSlider();
-                widthSlider.setValue(calculateChatboxWidth(this.mc.gameSettings.chatWidth));
+                widthSlider.setValue(GuiNewChat.calculateChatboxWidth(this.mc.gameSettings.chatWidth));
                 widthSlider.updateSlider();
         }
     }

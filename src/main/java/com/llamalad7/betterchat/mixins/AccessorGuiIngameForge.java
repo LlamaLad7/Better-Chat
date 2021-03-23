@@ -13,10 +13,20 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.llamalad7.betterchat.utils;
 
-public class AnimationTools {
-    public static float clamp(float number, float min, float max) {
-        return number < min ? min : Math.min(number, max);
-    }
+package com.llamalad7.betterchat.mixins;
+
+import net.minecraftforge.client.GuiIngameForge;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.gen.Accessor;
+import org.spongepowered.asm.mixin.gen.Invoker;
+
+@Mixin(GuiIngameForge.class)
+public interface AccessorGuiIngameForge {
+    @Accessor(remap = false)
+    RenderGameOverlayEvent getEventParent();
+
+    @Invoker(remap = false)
+    void invokePost(RenderGameOverlayEvent.ElementType type);
 }
