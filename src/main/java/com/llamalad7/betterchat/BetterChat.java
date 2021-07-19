@@ -18,7 +18,7 @@ public class BetterChat
 {
     public static final String MODID = "betterchat";
     public static final String NAME = "Better Chat";
-    public static final String VERSION = "1.4";
+    public static final String VERSION = "1.5";
     private static ChatSettings settings;
 
     @EventHandler
